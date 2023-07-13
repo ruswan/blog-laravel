@@ -6,12 +6,12 @@ use App\Filament\Resources\SeriesResource\Pages;
 use App\Filament\Resources\SeriesResource\RelationManagers;
 use App\Models\Series;
 use Filament\Forms;
+use Filament\Forms\Components\Card;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SeriesResource extends Resource
 {
@@ -23,12 +23,14 @@ class SeriesResource extends Resource
     {
         return $form
             ->schema([
+               Card::make()->schema([
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Textarea::make('content')
+                Forms\Components\RichEditor::make('content')
                     ->required()
                     ->maxLength(65535),
+               ])
             ]);
     }
 
@@ -37,10 +39,7 @@ class SeriesResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title'),
-                Tables\Columns\TextColumn::make('content'),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime(),
             ])
             ->filters([
