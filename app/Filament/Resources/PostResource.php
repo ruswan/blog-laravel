@@ -2,16 +2,20 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PostResource\Pages;
-use App\Filament\Resources\PostResource\RelationManagers;
-use App\Models\Post;
+use Closure;
 use Filament\Forms;
-use Filament\Resources\Form;
-use Filament\Resources\Resource;
-use Filament\Resources\Table;
+use App\Models\Post;
 use Filament\Tables;
+use App\Models\Category;
+use Illuminate\Support\Str;
+use Filament\Resources\Form;
+use Filament\Resources\Table;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Card;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\PostResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\PostResource\RelationManagers;
 
 class PostResource extends Resource
 {
@@ -23,23 +27,32 @@ class PostResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('author_id')
+                Card::make()->schema([
+                    Forms\Components\Select::make('category_id')
+                    ->relationship('category', 'name')
                     ->required(),
-                Forms\Components\TextInput::make('category_id')
-                    ->required(),
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('slug')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('excerpt')
-                    ->maxLength(65535),
-                Forms\Components\TextInput::make('banner')
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('content')
-                    ->required(),
-                Forms\Components\DatePicker::make('published_at'),
+                    Forms\Components\TextInput::make('title')
+                        ->required()
+                        ->maxLength(255)
+                        ->reactive()
+                        ->afterStateUpdated(function (Closure $set, $state, $context) {
+                            if ($context === 'edit') {
+                                return;
+                            }
+                            $set('slug', Str::slug($state));
+                        }),
+                    Forms\Components\TextInput::make('slug')
+                        ->required()
+                        ->maxLength(255)
+                        ->rules(['alpha_dash'])
+                        ->unique(ignoreRecord: true)
+                        ->disabled(),
+                    Forms\Components\FileUpload::make('banner')
+                        ->required(),
+                    Forms\Components\RichEditor::make('content')
+                        ->required(),
+                    Forms\Components\DatePicker::make('published_at'),
+                ])
             ]);
     }
 
@@ -47,19 +60,12 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('author_id'),
-                Tables\Columns\TextColumn::make('category_id'),
+                Tables\Columns\ImageColumn::make('banner'),
+                Tables\Columns\TextColumn::make('user.name'),
+                Tables\Columns\TextColumn::make('category.name'),
                 Tables\Columns\TextColumn::make('title'),
-                Tables\Columns\TextColumn::make('slug'),
-                Tables\Columns\TextColumn::make('excerpt'),
-                Tables\Columns\TextColumn::make('banner'),
-                Tables\Columns\TextColumn::make('content'),
                 Tables\Columns\TextColumn::make('published_at')
                     ->date(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime(),
             ])
             ->filters([
                 //
