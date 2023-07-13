@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\SeriesResource\Pages;
 use App\Filament\Resources\SeriesResource\RelationManagers;
+use App\Filament\Resources\SeriesResource\RelationManagers\PostsRelationManager;
 use App\Models\Series;
 use Filament\Forms;
 use Filament\Forms\Components\Card;
@@ -57,7 +58,7 @@ class SeriesResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            PostsRelationManager::class,
         ];
     }
     
