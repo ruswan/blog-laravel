@@ -20,6 +20,8 @@ class SeriesResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
+    protected static ?string $recordTitleAttribute = 'title';
+
     public static function form(Form $form): Form
     {
         return $form
