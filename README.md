@@ -66,7 +66,7 @@ Laravel Blog is a n open source Blog management based on Laravel and Filament. T
 ## Usage
 
 -   Register a new user or use the default admin account (if seeded).
--   Explore the blog, read posts, and leave comments.
+-   Explore the blog, create, read and update posts.
 -   Log in as an admin or author to create and manage posts.
 
 ## Contributing
@@ -82,6 +82,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 Feel free to modify and customize the template according to your specific project requirements. Remember to replace "your-username" with your actual GitHub username and make any necessary adjustments to the instructions, such as port numbers or additional configuration steps.
 
 Once you've created your README file, make sure to save it as `README.md` in the root directory of your GitHub repository.
+```
 
 ## Screnshoot
 
