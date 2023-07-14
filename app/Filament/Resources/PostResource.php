@@ -21,7 +21,7 @@ class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
     protected static ?string $recordTitleAttribute = 'title';
 
@@ -30,9 +30,6 @@ class PostResource extends Resource
         return $form
             ->schema([
                 Card::make()->schema([
-                    Forms\Components\Select::make('category_id')
-                    ->relationship('category', 'name')
-                    ->required(),
                     Forms\Components\TextInput::make('title')
                         ->required()
                         ->maxLength(255)
@@ -47,15 +44,24 @@ class PostResource extends Resource
                         ->required()
                         ->maxLength(255)
                         ->rules(['alpha_dash'])
-                        ->unique(ignoreRecord: true)
-                        ->disabled(),
-                    Forms\Components\FileUpload::make('banner')
-                        ->required(),
+                        ->unique(ignoreRecord: true),
                     Forms\Components\RichEditor::make('content')
                         ->required(),
+                ]) 
+                ->columnSpan(2),
+
+                Card::make()->schema([
+                    Forms\Components\Select::make('category_id')
+                    ->relationship('category', 'name')
+                    ->required(),
+                    Forms\Components\FileUpload::make('banner')
+                        ->required(),
                     Forms\Components\DatePicker::make('published_at'),
-                ])
-            ]);
+                ]) 
+                ->columnSpan(1),
+
+            ])
+            ->columns(3);;
     }
 
     public static function table(Table $table): Table
