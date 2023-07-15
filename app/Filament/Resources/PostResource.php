@@ -69,11 +69,18 @@ class PostResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('banner'),
-                Tables\Columns\TextColumn::make('user.name'),
-                Tables\Columns\TextColumn::make('category.name'),
-                Tables\Columns\TextColumn::make('title'),
+                Tables\Columns\TextColumn::make('title')
+                ->searchable(),
+                Tables\Columns\TextColumn::make('user.name')
+                ->searchable(),
+                Tables\Columns\TextColumn::make('category.name')
+                ->searchable(),
                 Tables\Columns\TextColumn::make('published_at')
-                    ->date(),
+                    ->date()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('views_count')
+                    ->counts('views')
+                    ->sortable(),
             ])
             ->filters([
                 //
