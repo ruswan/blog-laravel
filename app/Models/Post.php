@@ -7,8 +7,10 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
+use CyrildeWit\EloquentViewable\Contracts\Viewable;
+use CyrildeWit\EloquentViewable\InteractsWithViews;
 
 /**
  * Class Post
@@ -45,41 +47,43 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Post whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Post extends Model
+class Post extends Model implements Viewable
 {
-	protected $table = 'posts';
+    use InteractsWithViews;
 
-	protected $casts = [
-		'author_id' => 'int',
-		'category_id' => 'int',
-		'published_at' => 'datetime'
-	];
+    protected $table = 'posts';
 
-	protected $fillable = [
-		'author_id',
-		'category_id',
-		'title',
-		'slug',
-		'excerpt',
-		'banner',
-		'content',
-		'published_at'
-	];
+    protected $casts = [
+        'author_id' => 'int',
+        'category_id' => 'int',
+        'published_at' => 'datetime'
+    ];
 
-	public function user()
-	{
-		return $this->belongsTo(User::class, 'author_id');
-	}
+    protected $fillable = [
+        'author_id',
+        'category_id',
+        'title',
+        'slug',
+        'excerpt',
+        'banner',
+        'content',
+        'published_at'
+    ];
 
-	public function category()
-	{
-		return $this->belongsTo(Category::class);
-	}
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'author_id');
+    }
 
-	public function series()
-	{
-		return $this->belongsToMany(Series::class)
-					->withPivot('id')
-					->withTimestamps();
-	}
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function series()
+    {
+        return $this->belongsToMany(Series::class)
+                    ->withPivot('id')
+                    ->withTimestamps();
+    }
 }
