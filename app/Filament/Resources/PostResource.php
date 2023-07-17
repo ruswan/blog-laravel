@@ -57,8 +57,7 @@ class PostResource extends Resource
                     ->required(),
                     Forms\Components\FileUpload::make('banner')
                         ->required(),
-                    Forms\Components\Toggle::make('is_published')
-                        ->required(),
+                    Forms\Components\Toggle::make('is_published'),
                     Forms\Components\DatePicker::make('published_at'),
                     SpatieTagsInput::make('tags'),
                 ]) 
