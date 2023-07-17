@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Spatie\Tags\HasTags;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
@@ -49,7 +50,7 @@ use CyrildeWit\EloquentViewable\InteractsWithViews;
  */
 class Post extends Model implements Viewable
 {
-    use InteractsWithViews;
+    use InteractsWithViews, HasTags;
 
     protected $table = 'posts';
 
