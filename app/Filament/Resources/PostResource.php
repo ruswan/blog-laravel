@@ -47,6 +47,8 @@ class PostResource extends Resource
                         ->unique(ignoreRecord: true),
                     Forms\Components\RichEditor::make('content')
                         ->required(),
+                    Forms\Components\Toggle::make('is_published')
+                        ->required(),
                 ]) 
                 ->columnSpan(2),
 
@@ -80,6 +82,9 @@ class PostResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('views_count')
                     ->counts('views')
+                    ->sortable(),
+                Tables\Columns\IconColumn::make('is_published')
+                    ->boolean()
                     ->sortable(),
             ])
             ->filters([

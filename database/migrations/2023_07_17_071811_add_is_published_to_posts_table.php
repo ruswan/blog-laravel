@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->boolean('is_draft')->default(true)->after('content');
+            $table->boolean('is_published')->default(false)->after('content');
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('posts', function (Blueprint $table) {
-           $table->dropColumn('is_draft');
+           $table->dropColumn('is_published');
         });
     }
 };
