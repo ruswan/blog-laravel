@@ -56,6 +56,8 @@ class PostResource extends Resource
                     ->required(),
                     Forms\Components\FileUpload::make('banner')
                         ->required(),
+                    Forms\Components\Toggle::make('is_published')
+                        ->required(),
                     Forms\Components\DatePicker::make('published_at'),
                 ]) 
                 ->columnSpan(1),
@@ -80,6 +82,9 @@ class PostResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('views_count')
                     ->counts('views')
+                    ->sortable(),
+                Tables\Columns\IconColumn::make('is_published')
+                    ->boolean()
                     ->sortable(),
             ])
             ->filters([

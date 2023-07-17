@@ -56,7 +56,8 @@ class Post extends Model implements Viewable
     protected $casts = [
         'author_id' => 'int',
         'category_id' => 'int',
-        'published_at' => 'datetime'
+        'published_at' => 'datetime',
+        'is_published' => 'bool',
     ];
 
     protected $fillable = [
@@ -67,7 +68,8 @@ class Post extends Model implements Viewable
         'excerpt',
         'banner',
         'content',
-        'published_at'
+        'published_at',
+        'is_published',
     ];
 
     public function user()
