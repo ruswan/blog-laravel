@@ -47,8 +47,6 @@ class PostResource extends Resource
                         ->unique(ignoreRecord: true),
                     Forms\Components\RichEditor::make('content')
                         ->required(),
-                    Forms\Components\Toggle::make('is_published')
-                        ->required(),
                 ]) 
                 ->columnSpan(2),
 
@@ -57,6 +55,8 @@ class PostResource extends Resource
                     ->relationship('category', 'name')
                     ->required(),
                     Forms\Components\FileUpload::make('banner')
+                        ->required(),
+                    Forms\Components\Toggle::make('is_published')
                         ->required(),
                     Forms\Components\DatePicker::make('published_at'),
                 ]) 
