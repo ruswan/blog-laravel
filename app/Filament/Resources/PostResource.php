@@ -6,17 +6,13 @@ use Closure;
 use Filament\Forms;
 use App\Models\Post;
 use Filament\Tables;
-use App\Models\Category;
 use Illuminate\Support\Str;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
-use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\SpatieTagsInput;
 use App\Filament\Resources\PostResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\PostResource\RelationManagers;
 
 class PostResource extends Resource
 {
